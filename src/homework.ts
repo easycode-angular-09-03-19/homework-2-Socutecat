@@ -1,10 +1,11 @@
-// ***************** Этот файл можно удалить если он вам не подходит или не нужен. ***************** 
+// ***************** Этот файл можно удалить если он вам не подходит или не нужен. *****************
 // *************************************************************************************************
 function addItemInfoDecorator(target: Object, method: string, descriptor: PropertyDescriptor) {
 	let originalMethod = descriptor.value;
 	const currentTime = new Date();
-	let date: string = `${currentTime.getFullYear()}:${currentTime.getMonth()}:${currentTime.getDay()}:${currentTime.getHours()}:${currentTime.getMinutes()}`;
-	descriptor.value = function() {
+	let date: string =
+		`${currentTime.getFullYear()}:${currentTime.getMonth()}:${currentTime.getDay()}:${currentTime.getHours()}:${currentTime.getMinutes()}`;
+	descriptor.value = function () {
 		let originalResult = originalMethod.apply(this);
 		originalResult.date = date;
 		originalResult.info = `${originalResult.name} - ${originalResult.price}`;
@@ -13,22 +14,22 @@ function addItemInfoDecorator(target: Object, method: string, descriptor: Proper
 }
 
 class Item {
-    public price: number;
-    public name: string;
+	public price: number;
+	public name: string;
 
-    constructor(name: string ,price: number) {
-        this.name = name;
-        this.price = price;
-    }
+	constructor(name: string, price: number) {
+		this.name = name;
+		this.price = price;
+	}
 
-    @addItemInfoDecorator
-    public getItemInfo() {
+	@addItemInfoDecorator
+	public getItemInfo() {
 
-        return {
-            name: this.name, 
+		return {
+			name: this.name,
 			price: this.price,
-        };
-    }
+		};
+	}
 }
 
 let item = new Item('Apple', 100);
@@ -37,12 +38,13 @@ console.log(item.getItemInfo());
 
 //================Task 2================
 function decorateClass(type: string) {
-	return function(targetClass) {
+	return function (targetClass) {
 		const currentTime = new Date();
-		let date: string = `${currentTime.getFullYear()}:${currentTime.getMonth()}:${currentTime.getDay()}:${currentTime.getHours()}:${currentTime.getMinutes()}`;
+		let date: string =
+			`${currentTime.getFullYear()}:${currentTime.getMonth()}:${currentTime.getDay()}:${currentTime.getHours()}:${currentTime.getMinutes()}`;
 		return class {
 			createDate = date;
-			type:string = type;
+			type: string = type;
 
 		};
 	}
@@ -70,7 +72,7 @@ namespace Usa {
 		author: string;
 	}
 
-	export class NewsService{
+	export class NewsService {
 		protected apiurl: string = 'https://news_api_usa_url'
 		public getNews() {} // method
 	}
@@ -101,20 +103,20 @@ console.log(americanedNews);
 
 //================Task 4================
 class Junior {
-    doTasks() {
-        console.log('Actions!!!');
-    }
+	doTasks() {
+		console.log('Actions!!!');
+	}
 }
 
 class Middle {
-    createApp() {
-        console.log('Creating!!!');
-    }
+	createApp() {
+		console.log('Creating!!!');
+	}
 }
 
-class Senior implements Junior, Middle{
+class Senior implements Junior, Middle {
 	public doTasks(): void {}
-	public createApp() :void {}
+	public createApp(): void {}
 	public createArchitecture(): void {
 		console.log('Disagreeing!!!');
 	}
@@ -130,4 +132,4 @@ function applyMixins(targetClass: any, baseClasses: any[]) {
 
 applyMixins(Senior, [Junior, Middle]);
 
-const max = new Senior(); 
+const max = new Senior();
